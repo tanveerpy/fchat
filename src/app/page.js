@@ -90,6 +90,18 @@ export default function Home() {
     };
   }, [isLoggedIn, userName, callActive]);
 
+  // Attach media streams to video elements once they are rendered
+  useEffect(() => {
+    if (callActive) {
+      if (localVideoRef.current && localStream.current) {
+        localVideoRef.current.srcObject = localStream.current;
+      }
+      if (remoteVideoRef.current && remoteStream.current) {
+        remoteVideoRef.current.srcObject = remoteStream.current;
+      }
+    }
+  }, [callActive]);
+
   const handleLogin = (e) => {
     e.preventDefault();
     if (secretCode === SECRET_CODE && userName.trim() !== "") {
